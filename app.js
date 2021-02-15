@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const privateInfo = require('./util/private-info')
+const errorNotif = require('./util/error-notif')
 
 const app = express()
 
@@ -23,6 +24,8 @@ app.use((req, res, next) => {
     const status = error.statusCode || 500;
     const message = error.message;
     const data = error.data;
+    // errorNotif.sendViaEmail("alibagheri.1379.1389@gmail.com","Ecommerce-REST-API","localhost:3000",[error])
+    errorNotif.sendViaTelegram(119016501,,"Ecommerce-REST-API","localhost:3000",[error])
     res.status(status).json({ message: message, data: data });
   });
 
