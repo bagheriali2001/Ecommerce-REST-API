@@ -10,7 +10,7 @@ exports.add = (req, res, next) => {
     const product = new Product({name: name, description: description, quantity: 0, price: price, imageUrl: imageUrl})
     product.save()
     .then(result => {
-      res.status(201).json({ massage: "Product created!", product: product});
+        res.status(201).json({ message: "Product created!", product: product});
     }).catch(err => {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -38,11 +38,14 @@ exports.edit = (req, res, next) => {
             return product.save()
         }
         else{
-            res.status(404).json({ massage: "Product not found!"});
+            let err = new Error()
+            err.statusCode=404
+            err.message="Product not found!"
+            throw err
         }
     })
     .then(result =>{
-      res.status(201).json({ massage: "Product edited!", product: product});
+        res.status(201).json({ message: "Product edited!", product: product});
     }).catch(err => {
         if (!err.statusCode) {
             err.statusCode = 500;
@@ -57,10 +60,13 @@ exports.delete = (req, res, next) => {
     Product.findByIdAndRemove(_id)
     .then(result =>{
         if(result != null){
-            res.status(200).json({ massage: "Product deleted!"});
+            res.status(200).json({ message: "Product deleted!"});
         }
         else{
-            res.status(404).json({ massage: "Product not found!"});
+            let err = new Error()
+            err.statusCode=404
+            err.message="Product not found!"
+            throw err
         }
     }).catch(err => {
         if (!err.statusCode) {
@@ -82,10 +88,10 @@ exports.get = (req, res, next) => {
         })
         .then(result =>{
             if(result != null){
-                res.status(200).json({ massage: "Products found!", products: result, totalProducts: total});
+                res.status(200).json({ message: "Products found!", products: result, totalProducts: total});
             }
             else{
-                res.status(404).json({ massage: "Not enough products!"});
+                res.status(404).json({ message: "Not enough products!"});
             }
         }).catch(err => {
             if (!err.statusCode) {
@@ -98,10 +104,13 @@ exports.get = (req, res, next) => {
         Product.findById(_id).populate('comments')
         .then(result =>{
             if(result != null){
-                res.status(200).json({ massage: "Product found!" , product: result});
+                res.status(200).json({ message: "Product found!" , product: result});
             }
             else{
-                res.status(404).json({ massage: "Product not found!"});
+                let err = new Error()
+                err.statusCode=404
+                err.message="Product not found!"
+                throw err
             }
         }).catch(err => {
             if (!err.statusCode) {
@@ -119,10 +128,10 @@ exports.get = (req, res, next) => {
         })
         .then(result =>{
             if(result != null){
-                res.status(200).json({ massage: "Products found!", products: result, totalProducts: total});
+                res.status(200).json({ message: "Products found!", products: result, totalProducts: total});
             }
             else{
-                res.status(404).json({ massage: "Not enough products!"});
+                res.status(404).json({ message: "Not enough products!"});
             }
         }).catch(err => {
             if (!err.statusCode) {
@@ -141,7 +150,10 @@ exports.addLoad = (req, res, next) => {
     Product.findById(_id)
     .then(result =>{
         if(result == null){
-            res.status(404).json({ massage: "Product not found!"});
+            let err = new Error()
+            err.statusCode=404
+            err.message="Product not found!"
+            throw err
         }
         else{
             product = result
@@ -149,7 +161,7 @@ exports.addLoad = (req, res, next) => {
             return product.save()
         }
     }).then(result =>{
-        res.status(200).json({ massage: "Load added!", products: product});
+        res.status(200).json({ message: "Load added!", products: product});
     }).catch(err => {
         if (!err.statusCode) {
             err.statusCode = 500;

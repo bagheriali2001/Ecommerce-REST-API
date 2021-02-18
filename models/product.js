@@ -23,11 +23,14 @@ const productSchema = new Schema(
         type: Number,
         required: true
     },
-    comments: [{
+    comments: {
+      type: [{
         type: Schema.Types.ObjectId,
         ref: 'Comment',
         required: false
-    }]
+      }],
+      required: false
+    }
 
   }
 );
