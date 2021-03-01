@@ -21,15 +21,20 @@ const orderSchema = new Schema(
             }
         }],
         required: false
-      },
-    isPaid: {
-        type: Boolean,
+    },
+    status: {
+        type: String,
         requierd: true
     },
-    isCanceled: {
-        type: Boolean,
+    total: {
+        type: Number,
         requierd: true
     }
+    //unpaid
+    //paied
+    //canceled
+    //sent
+    //delivered
   },
   { timestamps: true }
 );

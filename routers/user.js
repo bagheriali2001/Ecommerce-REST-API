@@ -4,21 +4,28 @@ const userController = require('../controllers/user');
 
 const router = express.Router();
 
+const isAuth = require('../middleware/isAuth')
+
+
 router.post('/add', userController.add);
 
-router.post('/edit', userController.edit);
+router.post('/edit', isAuth.isAuth, userController.edit);
 
-router.post('/delete', userController.delete);
+router.post('/delete',isAuth.isAuth,  userController.delete);
 
-router.get('/get', userController.get);
+router.get('/get', isAuth.isAuth, userController.get);
 
-router.post('/addToCart', userController.addToCart);
+router.get('/adminGetUser', isAuth.isAdmin, userController.adminGetUser);
 
-router.post('/removeFromCart', userController.removeFromCart);
+router.post('/addToCart', isAuth.isAuth, userController.addToCart);
 
-router.get('/getCart', userController.getCart);
+router.post('/removeFromCart', isAuth.isAuth, userController.removeFromCart);
 
-router.post('/addAdmin', userController.addAdmin);
+router.get('/getCart', isAuth.isAuth, userController.getCart);
+
+router.get('/adminGetCart', isAuth.isAdmin, userController.adminGetCart);
+
+router.post('/addAdmin', isAuth.isAdmin, userController.addAdmin);
 
 
 module.exports = router;

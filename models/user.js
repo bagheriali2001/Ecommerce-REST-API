@@ -19,6 +19,18 @@ const userSchema = new Schema(
         type: String,
         required: true
     },
+    token: {
+        type: String,
+        required: false
+    },
+    resetToken: {
+        type: String,
+        required: false
+    },
+    resetTokenExp: {
+        type: Date,
+        required: false
+    },
     imageUrl: {
       type: String,
       required: false
@@ -28,18 +40,27 @@ const userSchema = new Schema(
       required: true
     },
     cart: {
-      type: [{
-        product: {
+      type: {
+        productList:{
+          type: [{
+          product: {
             type: Schema.Types.ObjectId,
             ref: 'Product',
             required: true
-        },
-        quantity: {
+          },
+          quantity: {
             type: Number,
             requierd: true
+          }
+          }],
+          requierd: true
+        },
+        total: {
+          type: Number,
+          requierd: true
         }
-      }],
-      required: false
+      },
+      requierd: true
     },
     orders: {
       type:  [{

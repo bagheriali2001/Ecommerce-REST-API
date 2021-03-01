@@ -4,11 +4,15 @@ const commentController = require('../controllers/comment');
 
 const router = express.Router();
 
-router.post('/add', commentController.add);
+const isAuth = require('../middleware/isAuth')
 
-router.post('/edit', commentController.edit);
+router.post('/add', isAuth.isAuth, commentController.add);
 
-router.post('/delete', commentController.delete);
+router.post('/edit', isAuth.isAuth, commentController.edit);
+
+router.post('/delete', isAut.isAuth, commentController.delete);
+
+router.post('/adminDelete', isAut.isAdmin, commentController.adminDelete);
 
 router.get('/get', commentController.get);
 

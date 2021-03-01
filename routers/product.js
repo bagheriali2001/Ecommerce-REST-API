@@ -4,14 +4,17 @@ const productController = require('../controllers/product');
 
 const router = express.Router();
 
-router.post('/add', productController.add);
+const isAuth = require('../middleware/isAuth')
 
-router.post('/edit', productController.edit);
 
-router.post('/delete', productController.delete);
+router.post('/add', isAuth.isAdmin, productController.add);
+
+router.post('/edit', isAuth.isAdmin, productController.edit);
+
+router.post('/delete', isAuth.isAdmin, productController.delete);
 
 router.get('/get', productController.get);
 
-router.post('/addLoad', productController.addLoad);
+router.post('/addLoad', isAuth.isAdmin, productController.addLoad);
 
 module.exports = router;
